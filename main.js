@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const portti = 3009;
+const portti = process.env.PORT || 3009;
 
 const uutiset = require("./models/uutiset");
 
