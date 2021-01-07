@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>RSS-Uutiset</title>
+</head>
+<body class="bg-secondary">
+
+<nav class="navbar bg-dark">
+    <div class="col-md-9">
+        <a class="navbar-brand badge-pill badge-light" href="/">
+            RSS-UUTISET
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a class="navbar-brand" href="https://www.iltalehti.fi">
+            <img class="img-thumbnail img-responsive" src="/img/iltalehti.png" height="30" width="60">
+        </a>
+        <a class="navbar-brand" href="https://www.yle.fi">
+            <img class="img-thumbnail img-responsive" src="/img/yle.png" height="30" width="60">
+        </a>
+        <a class="navbar-brand" href="https://www.hs.fi">
+            <img class="img-thumbnail img-responsive" src="/img/hs.png" height="30" width="60">
+        </a>
+    </div>
+</nav>
+
+<div class="container bg-light pt-5">
+    <div class="row mb-3">
+        <div class="col-sm-12 mb-3 mt-3 border-bottom border-secondary">
+            <h4 class="text-dark">Iltalehden, Ylen ja Helsingin Sanomien tuoreimmat uutiset</h4>
+        </div>
+    <% uutiset.forEach((uutinen) => { %>
+
+    <div class="col-md-4 mb-3">
+        <div class="card">
+
+            <img class="card-img-top" src="<%=uutinen.kuva%>" alt="uutinen">
+            
+            <div class="card-body">
+                <% let pvm = uutinen.pvm.toLocaleString().slice(0, 6) %>
+                <% if(pvm.substring(4) == "20"){
+                    pvm = pvm.slice(0, 4);
+                } 
+                if(pvm.substring(5) == "2"){
+                    pvm = pvm.slice(0, 5);
+                }%>
+
+                <h6 class="card-subtitle mb-2 text-muted"><%=pvm%> klo <%=uutinen.klo%></h6>
+                <p class="card-text">
+                    <%=uutinen.sisalto%>
+                </p>
+                <% let linkki = uutinen.linkki.substring(6, 18) %>
+                <% if(linkki.includes("hs.fi") == true || linkki.includes(".hs") == true) {
+                    linkki = "HS";
+                } 
+                else if(linkki.includes("yle.fi") == true) {
+                    linkki = "Yle";
+                } 
+                else if(linkki.includes("ilta") == true) {
+                    linkki = "Iltalehti";
+                } else { linkki = "lähde"} %>
+                <a href="<%=uutinen.linkki%>" class="btn btn-dark"><%=linkki%></a>
+            </div>
+
+        </div>
+    </div>
+<% }) %>
+
+    </div>
+</div>
